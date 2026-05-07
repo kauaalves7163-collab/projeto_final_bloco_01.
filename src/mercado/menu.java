@@ -16,6 +16,8 @@ public class Menu{
 		produtos.cadastrar(new NaoPerecivel(produtos.gerarNumero(), "Feijão 1kg", 1, 8.50f, "Alimentos"));
 
 		int opcao;
+		String nome, setor;
+		float preco;
 
 		while (true) {
 
@@ -55,6 +57,20 @@ public class Menu{
 				case 1:
 					System.out.println("Cadastrar Produto\n\n");
 
+				    System.out.println("Digite o Nome do Produto: ");
+				    leia.nextLine(); // Limpa o buffer do nextInt lá do menu
+				    nome = leia.nextLine(); // Agora sim o nome será lido!
+
+				    System.out.println("Digite o Preço do Produto: ");
+				    preco = leia.nextFloat();
+
+				    System.out.println("Digite o Setor (Ex: Alimentos, Bebidas): ");
+				    leia.nextLine(); // Limpa o buffer do float
+				    setor = leia.nextLine();
+
+				 // O ID é gerado automaticamente e o Tipo é sempre 1 (Não Perecível)
+				    produtos.cadastrar(new NaoPerecivel(produtos.gerarNumero(), nome, 1, preco, setor));
+				    
 					break;
 				case 2:
 					System.out.println("Listar todos os Produtos\n\n");
@@ -64,14 +80,41 @@ public class Menu{
 					break;
 				case 3:
 					System.out.println("Consultar dados do Produto - por ID\n\n");
-
+					
+					System.out.println("Digite o ID do produto: ");
+					int idBusca = leia.nextInt();  
+					produtos.procurarPorId(idBusca);
 					break;
 				case 4:
 					System.out.println("Atualizar dados do Produto\n\n");
+					System.out.println("Digite o ID do produto que deseja atualizar: ");
+				    int idAtualizar = leia.nextInt();
+				    
+				    var buscaProduto = produtos.buscarNaCollection(idAtualizar);
+
+				    if (buscaProduto != null) {
+				        System.out.println("Digite o Novo Nome: ");
+				        leia.nextLine(); 
+				        String novoNome = leia.nextLine();
+				        
+				        System.out.println("Digite o Novo Preço: ");
+				        float novoPreco = leia.nextFloat();
+				        
+				        System.out.println("Digite o Novo Setor: ");
+				        leia.nextLine();
+				        String novoSetor = leia.nextLine();
+				        
+				        produtos.atualizar(new NaoPerecivel(idAtualizar, novoNome, 1, novoPreco, novoSetor));
+				    } else {
+				        System.out.println("\nProduto não encontrado!");
+				    }
 
 					break;
 				case 5:
 					System.out.println("Apagar o Produto\n\n");
+					System.out.println("Digite o ID do produto que deseja apagar: ");
+				    int idApagar = leia.nextInt();
+				    produtos.deletar(idApagar);
 
 					break;
 				default:
