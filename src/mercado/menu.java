@@ -1,8 +1,9 @@
 package mercado;
 
+import mercado.model.NaoPerecivel;
 import java.util.Scanner;
 
-public class menu {
+public class menu{
 
 	public static void main(String[] args) {
 
